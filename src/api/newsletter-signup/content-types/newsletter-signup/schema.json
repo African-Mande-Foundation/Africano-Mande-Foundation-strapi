@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "newsletter_signups",
+  "info": {
+    "singularName": "newsletter-signup",
+    "pluralName": "newsletter-signups",
+    "displayName": "Newsletter-signup"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email"
+    },
+    "SubscribedAt": {
+      "type": "datetime"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "newsletter_signup"
+    }
+  }
+}

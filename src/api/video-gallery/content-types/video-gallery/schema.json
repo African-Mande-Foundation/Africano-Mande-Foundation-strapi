@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "video_galleries",
+  "info": {
+    "singularName": "video-gallery",
+    "pluralName": "video-galleries",
+    "displayName": "Video-gallery"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Videos": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "files",
+        "videos"
+      ]
+    }
+  }
+}

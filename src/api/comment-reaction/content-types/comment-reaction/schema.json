@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "comment_reactions",
+  "info": {
+    "singularName": "comment-reaction",
+    "pluralName": "comment-reactions",
+    "displayName": "Comment-reaction"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "like",
+        "dislike"
+      ],
+      "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "required": true
+    },
+    "comment": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::comment.comment",
+      "inversedBy": "reactions"
+    }
+  }
+}

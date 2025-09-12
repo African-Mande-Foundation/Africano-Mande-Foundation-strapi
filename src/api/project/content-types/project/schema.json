@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Projects"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "Region": {
+      "type": "string"
+    },
+    "Category": {
+      "type": "string"
+    },
+    "StartDate": {
+      "type": "date"
+    },
+    "EndDate": {
+      "type": "date"
+    },
+    "Documents": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "volunteer_application_form": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::volunteer-application-form.volunteer-application-form",
+      "mappedBy": "Project"
+    },
+    "volunteers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::volunteer-profile.volunteer-profile"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "volunteer_profiles",
+  "info": {
+    "singularName": "volunteer-profile",
+    "pluralName": "volunteer-profiles",
+    "displayName": "Volunteers"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "FirstName": {
+      "type": "string"
+    },
+    "IdentityNumber": {
+      "type": "string"
+    },
+    "Location": {
+      "type": "string"
+    },
+    "User": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "volunteer_profile"
+    },
+    "LastName": {
+      "type": "string"
+    },
+    "Gender": {
+      "type": "string"
+    },
+    "DateOfBirth": {
+      "type": "date"
+    },
+    "PhoneNumber": {
+      "type": "string"
+    }
+  }
+}
