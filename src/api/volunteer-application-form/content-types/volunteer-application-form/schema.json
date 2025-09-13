@@ -57,9 +57,9 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "ApplicationForm"
     },
-    "reviewed_bies": {
+    "reviewed_by": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "admin::user"
     },
     "Project": {
@@ -67,6 +67,12 @@
       "relation": "oneToOne",
       "target": "api::project.project",
       "inversedBy": "volunteer_application_form"
+    },
+    "admin_note": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::admin-note.admin-note",
+      "mappedBy": "volunteer_application_form"
     }
   }
 }

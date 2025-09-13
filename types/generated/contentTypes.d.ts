@@ -373,6 +373,48 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAdminNoteAdminNote extends Struct.CollectionTypeSchema {
+  collectionName: 'admin_notes';
+  info: {
+    displayName: 'AdminNote';
+    pluralName: 'admin-notes';
+    singularName: 'admin-note';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    admin_user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Decision: Schema.Attribute.Enumeration<
+      ['Approve', 'Reject', 'Request More Information']
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::admin-note.admin-note'
+    > &
+      Schema.Attribute.Private;
+    Note: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    volunteer_application_form: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::volunteer-application-form.volunteer-application-form'
+    >;
+  };
+}
+
 export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   collectionName: 'articles';
   info: {
@@ -597,6 +639,41 @@ export interface ApiContactMessageContactMessage
   };
 }
 
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
+  info: {
+    displayName: 'Event';
+    pluralName: 'events';
+    singularName: 'event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Date: Schema.Attribute.DateTime;
+    Description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
+      Schema.Attribute.Private;
+    Location: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    Title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiImageGalleryImageGallery
   extends Struct.CollectionTypeSchema {
   collectionName: 'image_galleries';
@@ -620,6 +697,43 @@ export interface ApiImageGalleryImageGallery
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMembershipMembership extends Struct.CollectionTypeSchema {
+  collectionName: 'memberships';
+  info: {
+    displayName: 'Membership';
+    pluralName: 'memberships';
+    singularName: 'membership';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    EndDate: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::membership.membership'
+    > &
+      Schema.Attribute.Private;
+    member: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    MembershipStatus: Schema.Attribute.Enumeration<
+      ['Active', 'Expired', 'Pending']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    StartDate: Schema.Attribute.Date;
+    Type: Schema.Attribute.Enumeration<['Local', 'Remote']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -823,6 +937,10 @@ export interface ApiVolunteerApplicationFormVolunteerApplicationForm
     draftAndPublish: true;
   };
   attributes: {
+    admin_note: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::admin-note.admin-note'
+    >;
     applicant: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -847,7 +965,7 @@ export interface ApiVolunteerApplicationFormVolunteerApplicationForm
     Photo: Schema.Attribute.Media<'images' | 'files'>;
     Project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
-    reviewed_bies: Schema.Attribute.Relation<'oneToMany', 'admin::user'>;
+    reviewed_by: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1372,6 +1490,10 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    membership: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::membership.membership'
+    >;
     newsletter_signup: Schema.Attribute.Relation<
       'oneToOne',
       'api::newsletter-signup.newsletter-signup'
@@ -1414,13 +1536,16 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::admin-note.admin-note': ApiAdminNoteAdminNote;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
       'api::comment-reaction.comment-reaction': ApiCommentReactionCommentReaction;
       'api::comment.comment': ApiCommentComment;
       'api::contact-message.contact-message': ApiContactMessageContactMessage;
+      'api::event.event': ApiEventEvent;
       'api::image-gallery.image-gallery': ApiImageGalleryImageGallery;
+      'api::membership.membership': ApiMembershipMembership;
       'api::newsletter-signup.newsletter-signup': ApiNewsletterSignupNewsletterSignup;
       'api::newsletter.newsletter': ApiNewsletterNewsletter;
       'api::project.project': ApiProjectProject;

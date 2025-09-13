@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "admin_notes",
+  "info": {
+    "singularName": "admin-note",
+    "pluralName": "admin-notes",
+    "displayName": "AdminNote"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Note": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "Decision": {
+      "type": "enumeration",
+      "enum": [
+        "Approve",
+        "Reject",
+        "Request More Information"
+      ]
+    },
+    "admin_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user"
+    },
+    "volunteer_application_form": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::volunteer-application-form.volunteer-application-form",
+      "inversedBy": "admin_note"
+    }
+  }
+}
