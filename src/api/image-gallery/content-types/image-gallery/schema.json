@@ -14,10 +14,14 @@
     "Images": {
       "type": "media",
       "multiple": true,
+      "required": true,
       "allowedTypes": [
         "files",
         "videos"
       ]
+    },
+    "description": {
+      "type": "string"
     }
   }
 }

@@ -620,6 +620,7 @@ export interface ApiContactMessageContactMessage
     draftAndPublish: true;
   };
   attributes: {
+    contact: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -689,7 +690,9 @@ export interface ApiImageGalleryImageGallery
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Images: Schema.Attribute.Media<'files' | 'videos', true>;
+    description: Schema.Attribute.String;
+    Images: Schema.Attribute.Media<'files' | 'videos', true> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

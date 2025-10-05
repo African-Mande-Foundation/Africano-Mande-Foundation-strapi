@@ -22,6 +22,10 @@
     "message": {
       "type": "text",
       "required": true
+    },
+    "contact": {
+      "type": "string",
+      "required": true
     }
   }
 }
