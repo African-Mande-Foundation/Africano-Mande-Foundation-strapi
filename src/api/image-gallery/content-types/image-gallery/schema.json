@@ -17,10 +17,13 @@
       "required": true,
       "allowedTypes": [
         "files",
-        "videos"
+        "images"
       ]
     },
     "description": {
+      "type": "string"
+    },
+    "title": {
       "type": "string"
     }
   }

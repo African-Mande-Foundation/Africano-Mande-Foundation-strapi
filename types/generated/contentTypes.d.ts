@@ -691,7 +691,7 @@ export interface ApiImageGalleryImageGallery
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.String;
-    Images: Schema.Attribute.Media<'files' | 'videos', true> &
+    Images: Schema.Attribute.Media<'files' | 'images', true> &
       Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -700,6 +700,7 @@ export interface ApiImageGalleryImageGallery
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
