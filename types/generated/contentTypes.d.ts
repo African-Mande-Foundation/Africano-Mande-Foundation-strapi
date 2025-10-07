@@ -922,10 +922,11 @@ export interface ApiVideoGalleryVideoGallery
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Videos: Schema.Attribute.Media<'files' | 'videos', true>;
+    videos: Schema.Attribute.Media<'files' | 'videos', true>;
   };
 }
 

@@ -11,13 +11,16 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Videos": {
+    "videos": {
       "type": "media",
       "multiple": true,
       "allowedTypes": [
         "files",
         "videos"
       ]
+    },
+    "title": {
+      "type": "string"
     }
   }
 }
