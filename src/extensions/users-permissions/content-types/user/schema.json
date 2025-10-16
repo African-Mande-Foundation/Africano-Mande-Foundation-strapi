@@ -78,22 +78,17 @@
       "target": "api::comment.comment",
       "mappedBy": "user"
     },
-    "volunteer_profile": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::volunteer-profile.volunteer-profile",
-      "mappedBy": "User"
-    },
     "firstName": {
       "type": "string"
     },
     "lastName": {
       "type": "string"
     },
-    "volunteer": {
-      "type": "boolean",
-      "required": true,
-      "default": false
+    "volunteer_applications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::volunteer-application.volunteer-application",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

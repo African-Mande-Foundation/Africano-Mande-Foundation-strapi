@@ -11,10 +11,26 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "users_permissions_users": {
+    "users_permissions_user": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "plugin::users-permissions.user"
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "volunteer_applications"
+    },
+    "state": {
+      "type": "enumeration",
+      "required": false,
+      "default": "pending",
+      "enum": [
+        "approved",
+        "pending",
+        "rejected"
+      ]
+    },
+    "approved_by": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user"
     }
   }
 }

@@ -921,6 +921,7 @@ export interface ApiVolunteerApplicationVolunteerApplication
     draftAndPublish: true;
   };
   attributes: {
+    approved_by: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -931,11 +932,13 @@ export interface ApiVolunteerApplicationVolunteerApplication
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    state: Schema.Attribute.Enumeration<['approved', 'pending', 'rejected']> &
+      Schema.Attribute.DefaultTo<'pending'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users_permissions_users: Schema.Attribute.Relation<
-      'oneToMany',
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -966,10 +969,6 @@ export interface ApiVolunteerProfileVolunteerProfile
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    User: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
   };
 }
 
@@ -1475,12 +1474,9 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
-    volunteer: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<false>;
-    volunteer_profile: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::volunteer-profile.volunteer-profile'
+    volunteer_applications: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-application.volunteer-application'
     >;
   };
 }
