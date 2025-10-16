@@ -84,23 +84,16 @@
       "target": "api::volunteer-profile.volunteer-profile",
       "mappedBy": "User"
     },
-    "ApplicationForm": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::volunteer-application-form.volunteer-application-form",
-      "mappedBy": "applicant"
-    },
-    "membership": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::membership.membership",
-      "mappedBy": "member"
-    },
     "firstName": {
       "type": "string"
     },
     "lastName": {
       "type": "string"
+    },
+    "volunteer": {
+      "type": "boolean",
+      "required": true,
+      "default": false
     }
   }
 }

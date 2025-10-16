@@ -408,10 +408,6 @@ export interface ApiAdminNoteAdminNote extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    volunteer_application_form: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::volunteer-application-form.volunteer-application-form'
-    >;
   };
 }
 
@@ -735,43 +731,6 @@ export interface ApiImageGalleryImageGallery
   };
 }
 
-export interface ApiMembershipMembership extends Struct.CollectionTypeSchema {
-  collectionName: 'memberships';
-  info: {
-    displayName: 'Membership';
-    pluralName: 'memberships';
-    singularName: 'membership';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    EndDate: Schema.Attribute.Date;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::membership.membership'
-    > &
-      Schema.Attribute.Private;
-    member: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    MembershipStatus: Schema.Attribute.Enumeration<
-      ['Active', 'Expired', 'Pending']
-    >;
-    publishedAt: Schema.Attribute.DateTime;
-    StartDate: Schema.Attribute.Date;
-    Type: Schema.Attribute.Enumeration<['Local', 'Remote']>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiNewsletterSignupNewsletterSignup
   extends Struct.CollectionTypeSchema {
   collectionName: 'newsletter_signups';
@@ -950,49 +909,35 @@ export interface ApiVideoGalleryVideoGallery
   };
 }
 
-export interface ApiVolunteerApplicationFormVolunteerApplicationForm
+export interface ApiVolunteerApplicationVolunteerApplication
   extends Struct.CollectionTypeSchema {
-  collectionName: 'volunteer_application_forms';
+  collectionName: 'volunteer_applications';
   info: {
-    displayName: 'Volunteer-Application-Form';
-    pluralName: 'volunteer-application-forms';
-    singularName: 'volunteer-application-form';
+    displayName: 'Volunteer-Application';
+    pluralName: 'volunteer-applications';
+    singularName: 'volunteer-application';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    admin_note: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::admin-note.admin-note'
-    >;
-    applicant: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    ApplicationStatus: Schema.Attribute.Enumeration<
-      ['Pending', 'Approved', 'Rejected', 'Resubmit']
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    CV: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
-      Schema.Attribute.Required;
-    IdentityCard: Schema.Attribute.Media<'images' | 'files'> &
-      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::volunteer-application-form.volunteer-application-form'
+      'api::volunteer-application.volunteer-application'
     > &
       Schema.Attribute.Private;
-    MotivationLetter: Schema.Attribute.Text;
-    Photo: Schema.Attribute.Media<'images' | 'files'>;
     publishedAt: Schema.Attribute.DateTime;
-    reviewed_by: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    users_permissions_users: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1011,19 +956,12 @@ export interface ApiVolunteerProfileVolunteerProfile
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    DateOfBirth: Schema.Attribute.Date;
-    FirstName: Schema.Attribute.String;
-    Gender: Schema.Attribute.String;
-    IdentityNumber: Schema.Attribute.String;
-    LastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::volunteer-profile.volunteer-profile'
     > &
       Schema.Attribute.Private;
-    Location: Schema.Attribute.String;
-    PhoneNumber: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1492,10 +1430,6 @@ export interface PluginUsersPermissionsUser
     draftAndPublish: false;
   };
   attributes: {
-    ApplicationForm: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::volunteer-application-form.volunteer-application-form'
-    >;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     comments: Schema.Attribute.Relation<'oneToMany', 'api::comment.comment'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1516,10 +1450,6 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
-    membership: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::membership.membership'
-    >;
     newsletter_signup: Schema.Attribute.Relation<
       'oneToOne',
       'api::newsletter-signup.newsletter-signup'
@@ -1545,6 +1475,9 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
+    volunteer: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
     volunteer_profile: Schema.Attribute.Relation<
       'oneToOne',
       'api::volunteer-profile.volunteer-profile'
@@ -1572,13 +1505,12 @@ declare module '@strapi/strapi' {
       'api::donation.donation': ApiDonationDonation;
       'api::event.event': ApiEventEvent;
       'api::image-gallery.image-gallery': ApiImageGalleryImageGallery;
-      'api::membership.membership': ApiMembershipMembership;
       'api::newsletter-signup.newsletter-signup': ApiNewsletterSignupNewsletterSignup;
       'api::newsletter.newsletter': ApiNewsletterNewsletter;
       'api::project.project': ApiProjectProject;
       'api::report.report': ApiReportReport;
       'api::video-gallery.video-gallery': ApiVideoGalleryVideoGallery;
-      'api::volunteer-application-form.volunteer-application-form': ApiVolunteerApplicationFormVolunteerApplicationForm;
+      'api::volunteer-application.volunteer-application': ApiVolunteerApplicationVolunteerApplication;
       'api::volunteer-profile.volunteer-profile': ApiVolunteerProfileVolunteerProfile;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
