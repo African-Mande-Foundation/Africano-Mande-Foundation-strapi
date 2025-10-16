@@ -640,6 +640,34 @@ export interface ApiContactMessageContactMessage
   };
 }
 
+export interface ApiDonationDonation extends Struct.CollectionTypeSchema {
+  collectionName: 'donations';
+  info: {
+    displayName: 'Donation';
+    pluralName: 'donations';
+    singularName: 'donation';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::donation.donation'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    transactionId: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   collectionName: 'events';
   info: {
@@ -849,14 +877,6 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    volunteer_application_form: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::volunteer-application-form.volunteer-application-form'
-    >;
-    volunteers: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::volunteer-profile.volunteer-profile'
-    >;
   };
 }
 
@@ -968,7 +988,6 @@ export interface ApiVolunteerApplicationFormVolunteerApplicationForm
       Schema.Attribute.Private;
     MotivationLetter: Schema.Attribute.Text;
     Photo: Schema.Attribute.Media<'images' | 'files'>;
-    Project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
     reviewed_by: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -1489,6 +1508,8 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    firstName: Schema.Attribute.String;
+    lastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1548,6 +1569,7 @@ declare module '@strapi/strapi' {
       'api::comment-reaction.comment-reaction': ApiCommentReactionCommentReaction;
       'api::comment.comment': ApiCommentComment;
       'api::contact-message.contact-message': ApiContactMessageContactMessage;
+      'api::donation.donation': ApiDonationDonation;
       'api::event.event': ApiEventEvent;
       'api::image-gallery.image-gallery': ApiImageGalleryImageGallery;
       'api::membership.membership': ApiMembershipMembership;

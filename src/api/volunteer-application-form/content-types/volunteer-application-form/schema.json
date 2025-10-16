@@ -62,12 +62,6 @@
       "relation": "oneToOne",
       "target": "admin::user"
     },
-    "Project": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::project.project",
-      "inversedBy": "volunteer_application_form"
-    },
     "admin_note": {
       "type": "relation",
       "relation": "oneToOne",

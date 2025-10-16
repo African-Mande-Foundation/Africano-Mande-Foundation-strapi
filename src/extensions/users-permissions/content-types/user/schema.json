@@ -95,6 +95,12 @@
       "relation": "oneToOne",
       "target": "api::membership.membership",
       "mappedBy": "member"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
     }
   }
 }
