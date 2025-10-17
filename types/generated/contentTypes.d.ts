@@ -944,34 +944,6 @@ export interface ApiVolunteerApplicationVolunteerApplication
   };
 }
 
-export interface ApiVolunteerProfileVolunteerProfile
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'volunteer_profiles';
-  info: {
-    displayName: 'Volunteers';
-    pluralName: 'volunteer-profiles';
-    singularName: 'volunteer-profile';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::volunteer-profile.volunteer-profile'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1507,7 +1479,6 @@ declare module '@strapi/strapi' {
       'api::report.report': ApiReportReport;
       'api::video-gallery.video-gallery': ApiVideoGalleryVideoGallery;
       'api::volunteer-application.volunteer-application': ApiVolunteerApplicationVolunteerApplication;
-      'api::volunteer-profile.volunteer-profile': ApiVolunteerProfileVolunteerProfile;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
