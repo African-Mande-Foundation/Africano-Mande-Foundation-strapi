@@ -17,17 +17,166 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "volunteer_applications"
     },
+    "approved_by": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user"
+    },
     "state": {
       "type": "enumeration",
-      "required": false,
-      "default": "pending",
       "enum": [
         "approved",
-        "pending",
         "rejected"
       ]
     },
-    "approved_by": {
+    "birth_date": {
+      "type": "date"
+    },
+    "country_of_origin": {
+      "type": "string"
+    },
+    "address_of_origin": {
+      "type": "string"
+    },
+    "current_address": {
+      "type": "string"
+    },
+    "phone_number": {
+      "type": "string"
+    },
+    "next_of_kin": {
+      "type": "string"
+    },
+    "kin_relationship": {
+      "type": "string"
+    },
+    "kin_current_address": {
+      "type": "string"
+    },
+    "kin_email": {
+      "type": "email"
+    },
+    "other_personal_details": {
+      "type": "string"
+    },
+    "education": {
+      "type": "text"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "online",
+        "scanned"
+      ]
+    },
+    "employment": {
+      "type": "text"
+    },
+    "learning_of_opportunity": {
+      "type": "text"
+    },
+    "motivation_to_apply": {
+      "type": "text"
+    },
+    "knowledge_of_south_sudan": {
+      "type": "text"
+    },
+    "knowledge_of_maridi": {
+      "type": "text"
+    },
+    "visited_maridi": {
+      "type": "boolean"
+    },
+    "visited_south_sudan": {
+      "type": "boolean"
+    },
+    "purpose_of_visit": {
+      "type": "text"
+    },
+    "value_to_amf": {
+      "type": "text"
+    },
+    "value_to_community": {
+      "type": "text"
+    },
+    "project_focus": {
+      "type": "text"
+    },
+    "duration": {
+      "type": "text"
+    },
+    "recommendation_letter": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "cv": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "identification_document": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "passport_photo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "application_form": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "department": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "date"
+    },
+    "end_date": {
+      "type": "date"
+    },
+    "application_remarks": {
+      "type": "text"
+    },
+    "volunteer_progress": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::volunteer-progress.volunteer-progress",
+      "mappedBy": "volunteer_application"
+    },
+    "supervisor": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "admin::user"

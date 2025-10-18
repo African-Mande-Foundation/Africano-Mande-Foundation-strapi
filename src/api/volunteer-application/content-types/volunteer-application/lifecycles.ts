@@ -48,7 +48,7 @@ const lifecycle = {
           data: { role: volunteerRole.id },
         });
 
-        strapi.log.info(`✅ User ${userId} upgraded to Volunteer role.`);
+        strapi.log.info(`User ${userId} upgraded to Volunteer role.`);
       }
 
       if (fullResult.state === 'rejected') {
@@ -66,7 +66,7 @@ const lifecycle = {
           data: { role: authenticatedRole.id },
         });
 
-        strapi.log.info(`❌ User ${userId} reverted to Authenticated role.`);
+        strapi.log.info(` User ${userId} reverted to Authenticated role.`);
       }
 
     } catch (error) {

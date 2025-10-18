@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "volunteer_progresses",
+  "info": {
+    "singularName": "volunteer-progress",
+    "pluralName": "volunteer-progresses",
+    "displayName": "Volunteer-Progress"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "volunteer_application": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::volunteer-application.volunteer-application",
+      "inversedBy": "volunteer_progress"
+    },
+    "hours_completed": {
+      "type": "biginteger"
+    },
+    "volunteer_remarks": {
+      "type": "text"
+    },
+    "supervisor_remarks": {
+      "type": "text"
+    }
+  }
+}

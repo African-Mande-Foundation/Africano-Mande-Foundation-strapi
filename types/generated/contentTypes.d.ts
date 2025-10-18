@@ -692,10 +692,17 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     Location: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    seats: Schema.Attribute.BigInteger;
+    seats_remaining: Schema.Attribute.BigInteger;
+    state: Schema.Attribute.String;
     Title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    users_permissions_users: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -921,19 +928,57 @@ export interface ApiVolunteerApplicationVolunteerApplication
     draftAndPublish: true;
   };
   attributes: {
+    address_of_origin: Schema.Attribute.String;
+    application_form: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    application_remarks: Schema.Attribute.Text;
     approved_by: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    birth_date: Schema.Attribute.Date;
+    country_of_origin: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    current_address: Schema.Attribute.String;
+    cv: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    department: Schema.Attribute.String;
+    duration: Schema.Attribute.Text;
+    education: Schema.Attribute.Text;
+    employment: Schema.Attribute.Text;
+    end_date: Schema.Attribute.Date;
+    identification_document: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    kin_current_address: Schema.Attribute.String;
+    kin_email: Schema.Attribute.Email;
+    kin_relationship: Schema.Attribute.String;
+    knowledge_of_maridi: Schema.Attribute.Text;
+    knowledge_of_south_sudan: Schema.Attribute.Text;
+    learning_of_opportunity: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::volunteer-application.volunteer-application'
     > &
       Schema.Attribute.Private;
+    motivation_to_apply: Schema.Attribute.Text;
+    next_of_kin: Schema.Attribute.String;
+    other_personal_details: Schema.Attribute.String;
+    passport_photo: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    phone_number: Schema.Attribute.String;
+    project_focus: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
-    state: Schema.Attribute.Enumeration<['approved', 'pending', 'rejected']> &
-      Schema.Attribute.DefaultTo<'pending'>;
+    purpose_of_visit: Schema.Attribute.Text;
+    recommendation_letter: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    role: Schema.Attribute.String;
+    start_date: Schema.Attribute.Date;
+    state: Schema.Attribute.Enumeration<['approved', 'rejected']>;
+    supervisor: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    type: Schema.Attribute.Enumeration<['online', 'scanned']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -941,6 +986,49 @@ export interface ApiVolunteerApplicationVolunteerApplication
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    value_to_amf: Schema.Attribute.Text;
+    value_to_community: Schema.Attribute.Text;
+    visited_maridi: Schema.Attribute.Boolean;
+    visited_south_sudan: Schema.Attribute.Boolean;
+    volunteer_progress: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::volunteer-progress.volunteer-progress'
+    >;
+  };
+}
+
+export interface ApiVolunteerProgressVolunteerProgress
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'volunteer_progresses';
+  info: {
+    displayName: 'Volunteer-Progress';
+    pluralName: 'volunteer-progresses';
+    singularName: 'volunteer-progress';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    hours_completed: Schema.Attribute.BigInteger;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-progress.volunteer-progress'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    supervisor_remarks: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    volunteer_application: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::volunteer-application.volunteer-application'
+    >;
+    volunteer_remarks: Schema.Attribute.Text;
   };
 }
 
@@ -1479,6 +1567,7 @@ declare module '@strapi/strapi' {
       'api::report.report': ApiReportReport;
       'api::video-gallery.video-gallery': ApiVideoGalleryVideoGallery;
       'api::volunteer-application.volunteer-application': ApiVolunteerApplicationVolunteerApplication;
+      'api::volunteer-progress.volunteer-progress': ApiVolunteerProgressVolunteerProgress;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
