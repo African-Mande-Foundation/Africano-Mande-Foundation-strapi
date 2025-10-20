@@ -89,6 +89,9 @@
       "relation": "oneToMany",
       "target": "api::volunteer-application.volunteer-application",
       "mappedBy": "users_permissions_user"
+    },
+    "photoUrl": {
+      "type": "text"
     }
   }
 }
