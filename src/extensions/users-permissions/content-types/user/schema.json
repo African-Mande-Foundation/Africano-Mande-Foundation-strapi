@@ -79,10 +79,12 @@
       "mappedBy": "user"
     },
     "firstName": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
     "lastName": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
     "volunteer_applications": {
       "type": "relation",
