@@ -694,7 +694,9 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     seats: Schema.Attribute.BigInteger;
     seats_remaining: Schema.Attribute.BigInteger;
-    state: Schema.Attribute.String;
+    state: Schema.Attribute.Enumeration<
+      ['upcoming', 'ongoing', 'completed', 'cancelled']
+    >;
     Title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

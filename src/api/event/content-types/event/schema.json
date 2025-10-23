@@ -43,13 +43,19 @@
     "seats_remaining": {
       "type": "biginteger"
     },
-    "state": {
-      "type": "string"
-    },
     "users_permissions_users": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "plugin::users-permissions.user"
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": [
+        "upcoming",
+        "ongoing",
+        "completed",
+        "cancelled"
+      ]
     }
   }
 }
