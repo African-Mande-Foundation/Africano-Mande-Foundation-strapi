@@ -94,6 +94,12 @@
     },
     "photoUrl": {
       "type": "text"
+    },
+    "donation_registereds": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::donation-registered.donation-registered",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

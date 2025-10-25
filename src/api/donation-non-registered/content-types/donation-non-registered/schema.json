@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donation_non_registereds",
+  "info": {
+    "singularName": "donation-non-registered",
+    "pluralName": "donation-non-registereds",
+    "displayName": "Donation-non-registered"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "transactionId": {
+      "type": "text"
+    },
+    "fullName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "amount_usd": {
+      "type": "biginteger"
+    },
+    "cause": {
+      "type": "string"
+    }
+  }
+}

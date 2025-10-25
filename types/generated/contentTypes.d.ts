@@ -636,31 +636,71 @@ export interface ApiContactMessageContactMessage
   };
 }
 
-export interface ApiDonationDonation extends Struct.CollectionTypeSchema {
-  collectionName: 'donations';
+export interface ApiDonationNonRegisteredDonationNonRegistered
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'donation_non_registereds';
   info: {
-    displayName: 'Donation';
-    pluralName: 'donations';
-    singularName: 'donation';
+    displayName: 'Donation-non-registered';
+    pluralName: 'donation-non-registereds';
+    singularName: 'donation-non-registered';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
+    amount_usd: Schema.Attribute.BigInteger;
+    cause: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    fullName: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::donation-non-registered.donation-non-registered'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    transactionId: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDonationRegisteredDonationRegistered
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'donation_registereds';
+  info: {
+    displayName: 'Donation-registered';
+    pluralName: 'donation-registereds';
+    singularName: 'donation-registered';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    amount_usd: Schema.Attribute.BigInteger;
+    cause: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::donation.donation'
+      'api::donation-registered.donation-registered'
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    transactionId: Schema.Attribute.String;
+    transactionId: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -841,6 +881,9 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     Region: Schema.Attribute.String;
     StartDate: Schema.Attribute.Date;
+    state: Schema.Attribute.Enumeration<
+      ['upcoming', 'completed', 'ongoing', 'cancelled']
+    >;
     Title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1498,6 +1541,10 @@ export interface PluginUsersPermissionsUser
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    donation_registereds: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::donation-registered.donation-registered'
+    >;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -1561,7 +1608,8 @@ declare module '@strapi/strapi' {
       'api::comment-reaction.comment-reaction': ApiCommentReactionCommentReaction;
       'api::comment.comment': ApiCommentComment;
       'api::contact-message.contact-message': ApiContactMessageContactMessage;
-      'api::donation.donation': ApiDonationDonation;
+      'api::donation-non-registered.donation-non-registered': ApiDonationNonRegisteredDonationNonRegistered;
+      'api::donation-registered.donation-registered': ApiDonationRegisteredDonationRegistered;
       'api::event.event': ApiEventEvent;
       'api::image-gallery.image-gallery': ApiImageGalleryImageGallery;
       'api::newsletter-signup.newsletter-signup': ApiNewsletterSignupNewsletterSignup;

@@ -38,6 +38,15 @@
         "videos",
         "audios"
       ]
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": [
+        "upcoming",
+        "completed",
+        "ongoing",
+        "cancelled"
+      ]
     }
   }
 }
