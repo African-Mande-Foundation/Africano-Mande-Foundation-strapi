@@ -34,5 +34,6 @@ export default [
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
+  // Add your custom middleware here
   'global::windows-file-cleanup',
 ];

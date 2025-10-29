@@ -100,6 +100,12 @@
       "relation": "oneToMany",
       "target": "api::donation-registered.donation-registered",
       "mappedBy": "users_permissions_user"
+    },
+    "volunteer_application_drafts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::volunteer-application-draft.volunteer-application-draft",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

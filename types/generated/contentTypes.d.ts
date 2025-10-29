@@ -961,6 +961,76 @@ export interface ApiVideoGalleryVideoGallery
   };
 }
 
+export interface ApiVolunteerApplicationDraftVolunteerApplicationDraft
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'volunteer_application_drafts';
+  info: {
+    displayName: 'Volunteer-Application-Draft';
+    pluralName: 'volunteer-application-drafts';
+    singularName: 'volunteer-application-draft';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address_of_origin: Schema.Attribute.String;
+    application_form: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    birth_date: Schema.Attribute.Date;
+    country_of_origin: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    current_address: Schema.Attribute.String;
+    cv: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    duration: Schema.Attribute.Text;
+    education: Schema.Attribute.Text;
+    employment: Schema.Attribute.Text;
+    identification_document: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    kin_current_address: Schema.Attribute.String;
+    kin_email: Schema.Attribute.Email;
+    kin_phone_number: Schema.Attribute.String;
+    kin_relationship: Schema.Attribute.String;
+    knowledge_of_maridi: Schema.Attribute.Text;
+    knowledge_of_south_sudan: Schema.Attribute.Text;
+    learning_of_opportunity: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-application-draft.volunteer-application-draft'
+    > &
+      Schema.Attribute.Private;
+    motivation_to_apply: Schema.Attribute.Text;
+    next_of_kin: Schema.Attribute.String;
+    other_education: Schema.Attribute.Text;
+    other_personal_details: Schema.Attribute.Text;
+    passport_photo: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    phone_number: Schema.Attribute.String;
+    project_focus: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    purpose_of_visit: Schema.Attribute.Text;
+    recommendation_letter: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    value_to_amf: Schema.Attribute.Text;
+    value_to_community: Schema.Attribute.Text;
+    visited_maridi: Schema.Attribute.Boolean;
+    visited_south_sudan: Schema.Attribute.Boolean;
+  };
+}
+
 export interface ApiVolunteerApplicationVolunteerApplication
   extends Struct.CollectionTypeSchema {
   collectionName: 'volunteer_applications';
@@ -996,6 +1066,7 @@ export interface ApiVolunteerApplicationVolunteerApplication
     >;
     kin_current_address: Schema.Attribute.String;
     kin_email: Schema.Attribute.Email;
+    kin_phone_number: Schema.Attribute.String;
     kin_relationship: Schema.Attribute.String;
     knowledge_of_maridi: Schema.Attribute.Text;
     knowledge_of_south_sudan: Schema.Attribute.Text;
@@ -1008,7 +1079,8 @@ export interface ApiVolunteerApplicationVolunteerApplication
       Schema.Attribute.Private;
     motivation_to_apply: Schema.Attribute.Text;
     next_of_kin: Schema.Attribute.String;
-    other_personal_details: Schema.Attribute.String;
+    other_education: Schema.Attribute.Text;
+    other_personal_details: Schema.Attribute.Text;
     passport_photo: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
@@ -1584,6 +1656,10 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
+    volunteer_application_drafts: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-application-draft.volunteer-application-draft'
+    >;
     volunteer_applications: Schema.Attribute.Relation<
       'oneToMany',
       'api::volunteer-application.volunteer-application'
@@ -1617,6 +1693,7 @@ declare module '@strapi/strapi' {
       'api::project.project': ApiProjectProject;
       'api::report.report': ApiReportReport;
       'api::video-gallery.video-gallery': ApiVideoGalleryVideoGallery;
+      'api::volunteer-application-draft.volunteer-application-draft': ApiVolunteerApplicationDraftVolunteerApplicationDraft;
       'api::volunteer-application.volunteer-application': ApiVolunteerApplicationVolunteerApplication;
       'api::volunteer-progress.volunteer-progress': ApiVolunteerProgressVolunteerProgress;
       'plugin::content-releases.release': PluginContentReleasesRelease;
