@@ -11,20 +11,20 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "volunteer_application": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::volunteer-application.volunteer-application",
-      "inversedBy": "volunteer_progress"
-    },
     "hours_completed": {
       "type": "biginteger"
     },
-    "volunteer_remarks": {
-      "type": "text"
-    },
     "supervisor_remarks": {
       "type": "text"
+    },
+    "supervisor": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "volunteer_progresses"
+    },
+    "department": {
+      "type": "string"
     }
   }
 }

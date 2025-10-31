@@ -13,9 +13,9 @@
   "attributes": {
     "Content": {
       "type": "text",
-      "required": true,
       "minLength": 1,
-      "maxLength": 500
+      "maxLength": 500,
+      "required": true
     },
     "parent": {
       "type": "relation",
@@ -53,6 +53,12 @@
     },
     "Approved": {
       "type": "boolean"
+    },
+    "volunteer_article": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::volunteer-article.volunteer-article",
+      "inversedBy": "comments"
     }
   }
 }

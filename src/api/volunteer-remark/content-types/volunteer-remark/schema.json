@@ -1,0 +1,71 @@
+{
+  "kind": "collectionType",
+  "collectionName": "volunteer_remarks",
+  "info": {
+    "singularName": "volunteer-remark",
+    "pluralName": "volunteer-remarks",
+    "displayName": "Volunteer-Remark"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "experience",
+        "feedback",
+        "complaint",
+        "suggestion"
+      ]
+    },
+    "rating": {
+      "type": "integer"
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "reviewed",
+        "resolved",
+        "closed"
+      ]
+    },
+    "priority": {
+      "type": "enumeration",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ]
+    },
+    "category": {
+      "type": "string"
+    },
+    "responded_at": {
+      "type": "datetime"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "volunteer_remarks"
+    },
+    "responded_by": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user"
+    },
+    "content": {
+      "type": "text"
+    },
+    "response": {
+      "type": "text"
+    }
+  }
+}

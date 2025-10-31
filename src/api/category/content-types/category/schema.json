@@ -36,6 +36,12 @@
         "videos",
         "audios"
       ]
+    },
+    "volunteer_articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::volunteer-article.volunteer-article",
+      "mappedBy": "category"
     }
   }
 }

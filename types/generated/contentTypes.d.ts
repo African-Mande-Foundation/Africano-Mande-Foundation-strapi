@@ -426,18 +426,18 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
     comments: Schema.Attribute.Relation<'oneToMany', 'api::comment.comment'>;
-    cover: Schema.Attribute.Media<'images' | 'videos'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.RichText &
+    content: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
         {
           preset: 'defaultHtml';
         }
       >;
-    excerpt: Schema.Attribute.String;
+    cover: Schema.Attribute.Media<'images' | 'videos'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -486,6 +486,10 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    volunteer_articles: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-article.volunteer-article'
+    >;
   };
 }
 
@@ -519,6 +523,10 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    volunteer_articles: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-article.volunteer-article'
+    >;
   };
 }
 
@@ -600,6 +608,10 @@ export interface ApiCommentComment extends Struct.CollectionTypeSchema {
     user: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
+    >;
+    volunteer_article: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::volunteer-article.volunteer-article'
     >;
   };
 }
@@ -931,6 +943,40 @@ export interface ApiReportReport extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSupervisorSupervisor extends Struct.CollectionTypeSchema {
+  collectionName: 'supervisors';
+  info: {
+    displayName: 'supervisor';
+    pluralName: 'supervisors';
+    singularName: 'supervisor';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::supervisor.supervisor'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    supervisor_email: Schema.Attribute.Email;
+    supervisor_name: Schema.Attribute.Text;
+    supervisor_phone: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    volunteer_applications: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-application.volunteer-application'
+    >;
+  };
+}
+
 export interface ApiVideoGalleryVideoGallery
   extends Struct.CollectionTypeSchema {
   collectionName: 'video_galleries';
@@ -1061,6 +1107,7 @@ export interface ApiVolunteerApplicationVolunteerApplication
     education: Schema.Attribute.Text;
     employment: Schema.Attribute.Text;
     end_date: Schema.Attribute.Date;
+    hours_completed: Schema.Attribute.Integer;
     identification_document: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
@@ -1094,7 +1141,11 @@ export interface ApiVolunteerApplicationVolunteerApplication
     role: Schema.Attribute.String;
     start_date: Schema.Attribute.Date;
     state: Schema.Attribute.Enumeration<['approved', 'rejected']>;
-    supervisor: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    supervisor: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::supervisor.supervisor'
+    >;
+    supervisor_remarks: Schema.Attribute.Text;
     type: Schema.Attribute.Enumeration<['online', 'scanned']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1107,10 +1158,49 @@ export interface ApiVolunteerApplicationVolunteerApplication
     value_to_community: Schema.Attribute.Text;
     visited_maridi: Schema.Attribute.Boolean;
     visited_south_sudan: Schema.Attribute.Boolean;
-    volunteer_progress: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::volunteer-progress.volunteer-progress'
-    >;
+  };
+}
+
+export interface ApiVolunteerArticleVolunteerArticle
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'volunteer_articles';
+  info: {
+    displayName: 'Volunteer-Article';
+    pluralName: 'volunteer-articles';
+    singularName: 'volunteer-article';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
+    comments: Schema.Attribute.Relation<'oneToMany', 'api::comment.comment'>;
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    excerpt: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-article.volunteer-article'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'>;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1129,6 +1219,7 @@ export interface ApiVolunteerProgressVolunteerProgress
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    department: Schema.Attribute.String;
     hours_completed: Schema.Attribute.BigInteger;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1137,15 +1228,60 @@ export interface ApiVolunteerProgressVolunteerProgress
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    supervisor: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     supervisor_remarks: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    volunteer_application: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::volunteer-application.volunteer-application'
+  };
+}
+
+export interface ApiVolunteerRemarkVolunteerRemark
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'volunteer_remarks';
+  info: {
+    displayName: 'Volunteer-Remark';
+    pluralName: 'volunteer-remarks';
+    singularName: 'volunteer-remark';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.String;
+    content: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-remark.volunteer-remark'
+    > &
+      Schema.Attribute.Private;
+    priority: Schema.Attribute.Enumeration<['low', 'medium', 'high', 'urgent']>;
+    publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.Integer;
+    responded_at: Schema.Attribute.DateTime;
+    responded_by: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    response: Schema.Attribute.Text;
+    state: Schema.Attribute.Enumeration<
+      ['pending', 'reviewed', 'resolved', 'closed']
     >;
-    volunteer_remarks: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+    type: Schema.Attribute.Enumeration<
+      ['experience', 'feedback', 'complaint', 'suggestion']
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1664,6 +1800,14 @@ export interface PluginUsersPermissionsUser
       'oneToMany',
       'api::volunteer-application.volunteer-application'
     >;
+    volunteer_progresses: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-progress.volunteer-progress'
+    >;
+    volunteer_remarks: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-remark.volunteer-remark'
+    >;
   };
 }
 
@@ -1692,10 +1836,13 @@ declare module '@strapi/strapi' {
       'api::newsletter.newsletter': ApiNewsletterNewsletter;
       'api::project.project': ApiProjectProject;
       'api::report.report': ApiReportReport;
+      'api::supervisor.supervisor': ApiSupervisorSupervisor;
       'api::video-gallery.video-gallery': ApiVideoGalleryVideoGallery;
       'api::volunteer-application-draft.volunteer-application-draft': ApiVolunteerApplicationDraftVolunteerApplicationDraft;
       'api::volunteer-application.volunteer-application': ApiVolunteerApplicationVolunteerApplication;
+      'api::volunteer-article.volunteer-article': ApiVolunteerArticleVolunteerArticle;
       'api::volunteer-progress.volunteer-progress': ApiVolunteerProgressVolunteerProgress;
+      'api::volunteer-remark.volunteer-remark': ApiVolunteerRemarkVolunteerRemark;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

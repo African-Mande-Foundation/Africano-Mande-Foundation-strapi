@@ -173,19 +173,20 @@
     "application_remarks": {
       "type": "text"
     },
-    "volunteer_progress": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::volunteer-progress.volunteer-progress",
-      "mappedBy": "volunteer_application"
+    "kin_phone_number": {
+      "type": "string"
+    },
+    "supervisor_remarks": {
+      "type": "text"
+    },
+    "hours_completed": {
+      "type": "integer"
     },
     "supervisor": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "admin::user"
-    },
-    "kin_phone_number": {
-      "type": "string"
+      "relation": "manyToOne",
+      "target": "api::supervisor.supervisor",
+      "inversedBy": "volunteer_applications"
     }
   }
 }

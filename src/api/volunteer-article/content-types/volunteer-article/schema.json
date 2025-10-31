@@ -1,11 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "articles",
+  "collectionName": "volunteer_articles",
   "info": {
-    "singularName": "article",
-    "pluralName": "articles",
-    "displayName": "Article",
-    "description": "Create your blog content"
+    "singularName": "volunteer-article",
+    "pluralName": "volunteer-articles",
+    "displayName": "Volunteer-Article"
   },
   "options": {
     "draftAndPublish": true
@@ -22,29 +21,33 @@
     "cover": {
       "type": "media",
       "multiple": false,
-      "required": false,
       "allowedTypes": [
         "images",
-        "videos"
+        "files",
+        "videos",
+        "audios"
       ]
     },
-    "author": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::author.author",
-      "inversedBy": "articles"
-    },
-    "category": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::category.category",
-      "inversedBy": "articles"
+    "excerpt": {
+      "type": "string"
     },
     "comments": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::comment.comment",
-      "mappedBy": "article"
+      "mappedBy": "volunteer_article"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "volunteer_articles"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "inversedBy": "volunteer_articles"
     },
     "content": {
       "type": "customField",

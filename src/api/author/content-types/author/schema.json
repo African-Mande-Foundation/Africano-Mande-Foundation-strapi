@@ -39,6 +39,12 @@
       "relation": "oneToMany",
       "target": "api::newsletter.newsletter",
       "mappedBy": "author"
+    },
+    "volunteer_articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::volunteer-article.volunteer-article",
+      "mappedBy": "author"
     }
   }
 }

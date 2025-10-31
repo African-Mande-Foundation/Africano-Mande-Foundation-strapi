@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "supervisors",
+  "info": {
+    "singularName": "supervisor",
+    "pluralName": "supervisors",
+    "displayName": "supervisor"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "supervisor_name": {
+      "type": "text"
+    },
+    "supervisor_email": {
+      "type": "email"
+    },
+    "supervisor_phone": {
+      "type": "string"
+    },
+    "volunteer_applications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::volunteer-application.volunteer-application",
+      "mappedBy": "supervisor"
+    }
+  }
+}
