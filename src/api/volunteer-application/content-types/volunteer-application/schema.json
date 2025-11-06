@@ -187,6 +187,10 @@
       "relation": "manyToOne",
       "target": "api::supervisor.supervisor",
       "inversedBy": "volunteer_applications"
+    },
+    "target_hours": {
+      "type": "biginteger",
+      "default": "320"
     }
   }
 }

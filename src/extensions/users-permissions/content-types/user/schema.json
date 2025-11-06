@@ -112,12 +112,6 @@
       "relation": "oneToMany",
       "target": "api::volunteer-remark.volunteer-remark",
       "mappedBy": "users_permissions_user"
-    },
-    "volunteer_progresses": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::volunteer-progress.volunteer-progress",
-      "mappedBy": "supervisor"
     }
   }
 }

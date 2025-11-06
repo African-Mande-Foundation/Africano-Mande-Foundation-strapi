@@ -1146,6 +1146,8 @@ export interface ApiVolunteerApplicationVolunteerApplication
       'api::supervisor.supervisor'
     >;
     supervisor_remarks: Schema.Attribute.Text;
+    target_hours: Schema.Attribute.BigInteger &
+      Schema.Attribute.DefaultTo<'320'>;
     type: Schema.Attribute.Enumeration<['online', 'scanned']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1198,41 +1200,6 @@ export interface ApiVolunteerArticleVolunteerArticle
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'>;
     title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiVolunteerProgressVolunteerProgress
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'volunteer_progresses';
-  info: {
-    displayName: 'Volunteer-Progress';
-    pluralName: 'volunteer-progresses';
-    singularName: 'volunteer-progress';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    department: Schema.Attribute.String;
-    hours_completed: Schema.Attribute.BigInteger;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::volunteer-progress.volunteer-progress'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    supervisor: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    supervisor_remarks: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1800,10 +1767,6 @@ export interface PluginUsersPermissionsUser
       'oneToMany',
       'api::volunteer-application.volunteer-application'
     >;
-    volunteer_progresses: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::volunteer-progress.volunteer-progress'
-    >;
     volunteer_remarks: Schema.Attribute.Relation<
       'oneToMany',
       'api::volunteer-remark.volunteer-remark'
@@ -1841,7 +1804,6 @@ declare module '@strapi/strapi' {
       'api::volunteer-application-draft.volunteer-application-draft': ApiVolunteerApplicationDraftVolunteerApplicationDraft;
       'api::volunteer-application.volunteer-application': ApiVolunteerApplicationVolunteerApplication;
       'api::volunteer-article.volunteer-article': ApiVolunteerArticleVolunteerArticle;
-      'api::volunteer-progress.volunteer-progress': ApiVolunteerProgressVolunteerProgress;
       'api::volunteer-remark.volunteer-remark': ApiVolunteerRemarkVolunteerRemark;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
