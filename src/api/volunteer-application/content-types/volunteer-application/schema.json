@@ -4,7 +4,8 @@
   "info": {
     "singularName": "volunteer-application",
     "pluralName": "volunteer-applications",
-    "displayName": "Volunteer-Application"
+    "displayName": "Volunteer-Application",
+    "mainField": "supervisor_email"
   },
   "options": {
     "draftAndPublish": true

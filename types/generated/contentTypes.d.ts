@@ -880,7 +880,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Description: Schema.Attribute.String;
+    Description: Schema.Attribute.Text;
     Documents: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
@@ -966,7 +966,9 @@ export interface ApiSupervisorSupervisor extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    supervisor_email: Schema.Attribute.Email;
+    supervisor_email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     supervisor_name: Schema.Attribute.Text;
     supervisor_phone: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1084,6 +1086,7 @@ export interface ApiVolunteerApplicationVolunteerApplication
   collectionName: 'volunteer_applications';
   info: {
     displayName: 'Volunteer-Application';
+    mainField: 'supervisor_email';
     pluralName: 'volunteer-applications';
     singularName: 'volunteer-application';
   };

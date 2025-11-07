@@ -11,14 +11,16 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "supervisor_phone": {
+      "type": "string"
+    },
     "supervisor_name": {
       "type": "text"
     },
     "supervisor_email": {
-      "type": "email"
-    },
-    "supervisor_phone": {
-      "type": "string"
+      "type": "email",
+      "required": true,
+      "unique": true
     },
     "volunteer_applications": {
       "type": "relation",

@@ -15,7 +15,7 @@
       "type": "string"
     },
     "Description": {
-      "type": "string"
+      "type": "text"
     },
     "Region": {
       "type": "string"
