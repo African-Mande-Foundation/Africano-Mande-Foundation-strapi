@@ -673,6 +673,7 @@ export interface ApiDonationNonRegisteredDonationNonRegistered
       'api::donation-non-registered.donation-non-registered'
     > &
       Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
     transactionId: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
@@ -704,6 +705,7 @@ export interface ApiDonationRegisteredDonationRegistered
       'api::donation-registered.donation-registered'
     > &
       Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
     transactionId: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;

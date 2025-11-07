@@ -25,6 +25,9 @@
     },
     "cause": {
       "type": "string"
+    },
+    "message": {
+      "type": "text"
     }
   }
 }
