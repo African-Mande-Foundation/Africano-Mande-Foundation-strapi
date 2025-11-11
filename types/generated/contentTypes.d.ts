@@ -1081,6 +1081,35 @@ export interface ApiVolunteerApplicationDraftVolunteerApplicationDraft
   };
 }
 
+export interface ApiVolunteerApplicationFormVolunteerApplicationForm
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'volunteer_application_forms';
+  info: {
+    displayName: 'Volunteer-Application-Form';
+    pluralName: 'volunteer-application-forms';
+    singularName: 'volunteer-application-form';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    document: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-application-form.volunteer-application-form'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiVolunteerApplicationVolunteerApplication
   extends Struct.CollectionTypeSchema {
   collectionName: 'volunteer_applications';
@@ -1807,6 +1836,7 @@ declare module '@strapi/strapi' {
       'api::supervisor.supervisor': ApiSupervisorSupervisor;
       'api::video-gallery.video-gallery': ApiVideoGalleryVideoGallery;
       'api::volunteer-application-draft.volunteer-application-draft': ApiVolunteerApplicationDraftVolunteerApplicationDraft;
+      'api::volunteer-application-form.volunteer-application-form': ApiVolunteerApplicationFormVolunteerApplicationForm;
       'api::volunteer-application.volunteer-application': ApiVolunteerApplicationVolunteerApplication;
       'api::volunteer-article.volunteer-article': ApiVolunteerArticleVolunteerArticle;
       'api::volunteer-remark.volunteer-remark': ApiVolunteerRemarkVolunteerRemark;

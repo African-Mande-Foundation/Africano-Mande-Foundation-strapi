@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "volunteer_application_forms",
+  "info": {
+    "singularName": "volunteer-application-form",
+    "pluralName": "volunteer-application-forms",
+    "displayName": "Volunteer-Application-Form"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "document": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}
